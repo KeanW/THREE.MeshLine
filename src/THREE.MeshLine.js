@@ -6,9 +6,11 @@ var root = this
 
 var has_require = typeof require !== 'undefined'
 
+/*
 var THREE = root.THREE || has_require && require('three')
 if( !THREE )
 	throw new Error( 'MeshLine requires three.js' )
+*/
 
 function MeshLine() {
 
@@ -357,7 +359,8 @@ function MeshLineMaterial( parameters ) {
 '        c.a *= ceil(mod(vCounters + dashOffset, dashArray) - (dashArray * dashRatio));',
 '    }',
 '    gl_FragColor = c;',
-'    gl_FragColor.a *= step(vCounters, visibility);',
+'    if( visibility >= 0. ) gl_FragColor.a *= step(vCounters, visibility);',
+'    if( visibility < 0. ) gl_FragColor.a *= step(1. + visibility, vCounters);',
 '}' ];
 
 	function check( v, d ) {
